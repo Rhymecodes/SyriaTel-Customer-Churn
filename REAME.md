@@ -86,7 +86,7 @@ After checking for null values, we realize that there are no null values in our 
 4.	check for outliers
 I checked for outliers and realized most of the columns had outliers but with very small percentages. Since the small percentages could not make very significant changes, I decided to leave them as they were.
 
-Exploratory Data Analysis (EDA)
+## Exploratory Data Analysis (EDA)
 Exploratory Data Analysis (EDA) is an important step that helps understand the data, identify patterns, detect anomalies, and uncover relationships between variables before applying any machine learning models.
 EDA can be done in 3 important steps.
 1. Exploring Univariate Analysis.
@@ -100,7 +100,6 @@ Analysing the relationship between two variables to explore potential correlatio
 
  ## MODELING AND EVALUATING 
  ### Data Preprocessing
- Data Preprocessing
 Data preprocessing is a crucial step in the data analysis and machine learning pipeline. It involves preparing raw data to ensure it is clean, consistent, and suitable for analysis or modeling. High-quality data preprocessing can significantly enhance model accuracy and reliability.
 Key Steps in Data Preprocessing
 1. Handling Multicolinearity
@@ -123,6 +122,68 @@ I did normalization to balance the target variable “churn”
 5. Splitting the Dataset
 I then went ahead and identified the x and y variables to be used for modelling, and I split the dataset into train and test sets.
 
-Decision Trees
+I built two classificatiom models, logistic regression and decision Trees.
+
+for both of the two models, I followed the following steps:
+1. Building the baseline model
+2. Evaluating using the metrics of success
+3. Tining the model using different methods
+4. Evaluating the model again  to check if it has improved.
+5. Evaluating all models against each other.
+
+#### Decision Trees
 A decision tree model is evaluated using the Scikit learn library and fit into the training data.
 
+For my decision tree, I built a baseline model, evaluated it, and then I pruned the tree model using the max_depth value and min_samples_leaf value. I then evaluated the final model and these were my final results.
+
+Pruned model Metrics:
+- Accuracy: 0.9355322338830585
+- Precision: 0.8295454545454546
+- recall: 0.7227722772277227
+- f1_score: 0.7724867724867724
+From the evaluation metrics, the decision tree has a high accuracy score  and precision This is quite evident in the confusion matrix plot above as the number of false positives is quite low at 28 customers. In terms of recall, it's 72.27% , the accuracy is at  93.55%, the precision is at 82.95% and the AUC is 84.81%
+
+
+#### Logistic Regression
+Logistic Regression is a supervised machine learning algorithm used for binary classification problems. It predicts the probability of a target variable belonging to a particular class, where the target is binary (e.g., 0 or 1, Yes or No, True or False).
+
+For my logistic evaluation, I built a baseline model and evaluated it. Then I balanced the target variable and evaluated the model with the balanced target variable,and evaluated the results.
+After that I did Hyperparameter tuning which is regularization by reducing C to a small number. after that I evaluated the regularised model, and these were the final results.
+
+Regularized Model:
+- Accuracy: 0.769
+- Precision: 0.36163522012578614
+- recall: 0.8041958041958042
+- f1_score: 0.49891540130151846
+After increasing regularization, we see no difference in the AUC of the model. The metrics are the same as the model_with_weights, i.e. precision, recall, accuracy and F1 score have not increased or reduced.
+
+
+## EVALUATION
+model	       DTbase   DTprun	LRbase	LRbal	LRreg
+Precision	0.725	0.829	0.574	0.361	0.361
+Recall	        0.732	0.722	0.216	0.804	0.804
+Accuracy	0.917	0.935	0.865	0.769	0.769
+F1 score	0.729	0.772	0.315	0.499	0.499
+AUC score	0.842	0.848	0.830	0.834	0.834
+
+If we evaluate our models using our researched metrics of success:
+• Accuracy:75% - 85% : Most of the models lied between this range, while others, especially from the deision tree models, surpassed the range.
+• Precision:65% - 75% : The logistic regression models did not perform well with regards to our prediction metrics. Both models from the decision trees performed well
+• REcall:70% - 80% : for recall, only the liner regression baseline model did not reach our predicted metrics, The other models lied between the range of our predicted metrics.
+• F1-Score: between 0.55 and o.75 : The Decision Tree models performed well with regards to our predicted metrics of succes, but the Logistic Regression models did not.
+• Area Under the Curve (AUC): All models increase their AUC but the pruned model from decision trees had the highest "AUC".
+
+## RECOMMENDATIONS
+1.	I would recommend Decision Trees as the best Machine Learning model to use when trying to predict customer churn for SyriaTel Company.
+2.	The key factor influencing customer churn in SyriaTel Company is Total charges for calls, which greatly impacts the total minutes taken for calls I would recommend that day Call charges and international call charges to be reduced in order to reduce customer churn in SyriaTel.
+3.	I would also recommend strategies like rewarding minuites and tokens that can be redeemed to encourage or "entice" their customers to use Syriatel and inrease the number of calls.
+
+
+## CONCLUSIONS
+This analysis on Syriatel was better achieved using the Decision Tree model. It helped us conclude that Syriatel company should consider reducing call charges and include incentives in order to reduce customer churn and attract more customers.
+
+
+## NEXT STEPS
+
+The model can now be deployed to the end-users, and it can also be use to predict future similar cases in future.
+The project only used two modelling types to achieve it's goals. Other models should be considered just incase they are able to produce better results.
